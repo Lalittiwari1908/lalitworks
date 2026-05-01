@@ -108,9 +108,10 @@ function Contact() {
           </div>
           <button
             type="submit"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-primary text-primary-foreground font-medium shadow-glow hover:opacity-95 transition-all"
+            disabled={sending}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-primary text-primary-foreground font-medium shadow-glow hover:opacity-95 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Send Message <Send size={16} />
+            {sending ? "Sending…" : "Send Message"} <Send size={16} />
           </button>
           {status && <p className="text-sm text-primary">{status}</p>}
         </form>
