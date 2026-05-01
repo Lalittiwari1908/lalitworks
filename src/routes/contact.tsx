@@ -28,11 +28,13 @@ const schema = z.object({
 
 function Contact() {
   const [status, setStatus] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const result = schema.safeParse({
       name: fd.get("name"),
       email: fd.get("email"),
@@ -45,11 +47,29 @@ function Contact() {
       return;
     }
     setErrors({});
-    const subject = encodeURIComponent(`Portfolio contact from ${result.data.name}`);
-    const body = encodeURIComponent(`${result.data.message}\n\n— ${result.data.name} (${result.data.email})`);
-    window.location.href = `mailto:phlalittiwari@gmail.com?subject=${subject}&body=${body}`;
-    setStatus("Opening your email client…");
-    e.currentTarget.reset();
+    setSending(true);
+    setStatus("Sending your message…");
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: result.data.name,
+          from_email: result.data.email,
+          message: result.data.message,
+          reply_to: result.data.email,
+          to_email: "phlalittiwari@gmail.com",
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY },
+      );
+      setStatus("Message sent! I'll get back to you soon.");
+      form.reset();
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setStatus("Something went wrong. Please try again or email me directly.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
