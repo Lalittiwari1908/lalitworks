@@ -2,11 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Phone, Linkedin, Send, Github } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
-import emailjs from "@emailjs/browser";
-
-const EMAILJS_SERVICE_ID = "service_o6yrdlo";
-const EMAILJS_TEMPLATE_ID = "template_on7k397";
-const EMAILJS_PUBLIC_KEY = "0geVCP2EJV6aglqNJ";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -31,7 +26,7 @@ function Contact() {
   const [sending, setSending] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const fd = new FormData(form);
@@ -48,28 +43,13 @@ function Contact() {
     }
     setErrors({});
     setSending(true);
-    setStatus("Sending your message…");
-    try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name: result.data.name,
-          from_email: result.data.email,
-          message: result.data.message,
-          reply_to: result.data.email,
-          to_email: "phlalittiwari@gmail.com",
-        },
-        { publicKey: EMAILJS_PUBLIC_KEY },
-      );
-      setStatus("Message sent! I'll get back to you soon.");
-      form.reset();
-    } catch (err) {
-      console.error("EmailJS error:", err);
-      setStatus("Something went wrong. Please try again or email me directly.");
-    } finally {
-      setSending(false);
-    }
+    const { name, email, message } = result.data;
+    const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+    const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+    window.location.href = `mailto:phlalittiwari@gmail.com?subject=${subject}&body=${body}`;
+    setStatus("Opening your email app…");
+    form.reset();
+    setSending(false);
   }
 
   return (
