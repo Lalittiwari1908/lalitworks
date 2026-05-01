@@ -57,7 +57,7 @@ function Index() {
                 alt="Lalit Tiwari"
                 width={768}
                 height={768}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover scale-125 object-top"
               />
             </div>
             <div className="absolute -bottom-3 -right-3 glass px-4 py-2 rounded-lg font-mono text-xs">
