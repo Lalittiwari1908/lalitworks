@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, Phone, Linkedin, Send } from "lucide-react";
+import { Mail, Phone, Linkedin, Send, Github } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -64,6 +64,7 @@ function Contact() {
           <ContactItem icon={<Mail />} label="Email" value="phlalittiwari@gmail.com" href="mailto:phlalittiwari@gmail.com" />
           <ContactItem icon={<Phone />} label="Phone" value="+91 95034 96312" href="tel:+919503496312" />
           <ContactItem icon={<Linkedin />} label="LinkedIn" value="lalit-tiwari08" href="https://www.linkedin.com/in/lalit-tiwari08" />
+          <ContactItem icon={<Github />} label="GitHub" value="Lalittiwari1908" href="https://github.com/Lalittiwari1908" />
         </div>
 
         <form onSubmit={onSubmit} className="md:col-span-3 glass rounded-xl p-6 md:p-8 space-y-4">

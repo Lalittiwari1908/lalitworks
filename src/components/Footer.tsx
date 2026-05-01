@@ -26,7 +26,9 @@ export function Footer() {
             <Linkedin size={18} />
           </a>
           <a
-            href="#"
+            href="https://github.com/Lalittiwari1908"
+            target="_blank"
+            rel="noreferrer"
             className="p-2 rounded-md hover:bg-secondary text-muted-foreground hover:text-primary transition-colors"
             aria-label="GitHub"
           >
