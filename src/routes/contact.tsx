@@ -2,6 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Phone, Linkedin, Send, Github } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
+import emailjs from "@emailjs/browser";
+
+const EMAILJS_SERVICE_ID = "service_o6yrdlo";
+const EMAILJS_TEMPLATE_ID = "template_on7k397";
+const EMAILJS_PUBLIC_KEY = "0geVCP2EJV6aglqNJ";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
